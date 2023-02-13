@@ -19,7 +19,7 @@ jobs:
       - name: build Hugo site
         uses: jakejarvis/hugo-build-action@v0.110.0
         with:
-          args: --minify
+          args: --minify --enableGitInfo --verbose
 
       - name: build PDF
         uses: ./.github/actions/html2pdf

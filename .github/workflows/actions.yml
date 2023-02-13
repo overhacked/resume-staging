@@ -1,0 +1,53 @@
+name: deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - draft
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v3
+
+      - name: build Hugo site
+        uses: jakejarvis/hugo-build-action@v0.110.0
+        with:
+          args: --minify
+
+      - name: build PDF
+        uses: ./.github/actions/html2pdf
+        with:
+          htmlPath: public/index.html
+          pdfName: public/resume.pdf
+
+      - name: upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: public/
+
+  deploy:
+    needs: build
+
+    # Run on main branch in overhacked/resume or any branch in another repo
+    if: github.ref == 'refs/heads/main' || github.repository != 'overhacked/resume'
+    
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1

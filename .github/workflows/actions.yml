@@ -49,6 +49,15 @@ jobs:
       - name: restore Hugo output directory ownership
         run: sudo chown -R "$(id -u):$(id -g)" "${{ env.HUGO_PUBLIC_OUTDIR }}" "${{ env.HUGO_PDF_OUTDIR }}"
 
+      - name: save generated HTML as build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: hugo-output
+          retention-days: 5
+          path: |
+            ${{ env.HUGO_PUBLIC_OUTDIR }}
+            ${{ env.HUGO_PDF_OUTDIR }}
+
       - name: build PDF
         run: |
           npx chrome-headless-render-pdf \

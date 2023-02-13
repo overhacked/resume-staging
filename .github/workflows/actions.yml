@@ -12,7 +12,6 @@ jobs:
     env:
       HUGO_PUBLIC_OUTDIR: public_html
       HUGO_PDF_OUTDIR: pdf_html
-      HUGO_PDF_BASEURL: /
     steps:
       - name: checkout repo content
         uses: actions/checkout@v3
@@ -42,7 +41,7 @@ jobs:
             --verbose
             --environment production
             --destination "${{ env.HUGO_PDF_OUTDIR }}"
-            --baseURL "${{ env.HUGO_PDF_BASEURL }}/"
+            --baseURL "./"
             --minify
             --enableGitInfo 
 
@@ -58,12 +57,12 @@ jobs:
             ${{ env.HUGO_PUBLIC_OUTDIR }}
             ${{ env.HUGO_PDF_OUTDIR }}
 
-      - name: build PDF
+      - name: generate PDF
         run: |
           npx chrome-headless-render-pdf \
               --chrome-option=--no-sandbox \
               --include-background \
-              --url="${{ env.HUGO_PDF_BASEURL }}/index.html" \
+              --url="file://$GITHUB_WORKSPACE/${{ env.HUGO_PDF_OUTDIR }}/index.html" \
               --pdf="$GITHUB_WORKSPACE/${{ env.HUGO_PUBLIC_OUTDIR }}/resume.pdf"
 
       - name: upload GitHub Pages artifact

@@ -12,7 +12,7 @@ jobs:
     env:
       HUGO_PUBLIC_OUTDIR: public_html
       HUGO_PDF_OUTDIR: pdf_html
-      HUGO_PDF_BASEURL: file://${{ github.workspace }}/pdf_html
+      HUGO_PDF_BASEURL: /
     steps:
       - name: checkout repo content
         uses: actions/checkout@v3

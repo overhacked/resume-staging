@@ -1,10 +1,10 @@
 # Page settings
 
-baseURL = "https://overhacked.github.io/resume/"
+baseURL = "//resume.overhacked.dev/"
 languageCode = "en"
 title = ""
 theme = "hugo-devresume-theme"
-googleAnalytics = "UA-XXXXXXX-Y"
+#googleAnalytics = "UA-XXXXXXX-Y"
 
 
 
@@ -16,7 +16,7 @@ googleAnalytics = "UA-XXXXXXX-Y"
     description = "DevResume - Bootstrap 4 Resume/CV Template For Software Developers"
 
 
-    primaryColor = "#54B689"
+    primaryColor = "#000000"
     textPrimaryColor = "#292929"
 
 
@@ -24,8 +24,8 @@ googleAnalytics = "UA-XXXXXXX-Y"
 
     [params.profile]
         enable = true
-        name = "Simon Doe"
-        tagline = "Senior Software Engineer"
+        name = "Ross Williams"
+        tagline = ""
         avatar = "avatar.png"
 
 
@@ -36,20 +36,20 @@ googleAnalytics = "UA-XXXXXXX-Y"
 
     [params.contact]
         enable = true
-        location = "New York"
+        location = "Atlanta"
 
         [[params.contact.list]]
         icon = "fas fa-phone-square"
-        url = "tel:#"
-        text = "0123 4567 890"
+        url = "tel:+17704646851"
+        text = "+1 (770) 464-6851"
         [[params.contact.list]]
         icon = "fas fa-envelope-square"
-        url = "mailto:#"
-        text = "simon.doe@yourwebsite.com"
+        url = "mailto:ross@ross-williams.net"
+        text = "ross@ross-williams.net"
         [[params.contact.list]]
         icon = "fas fa-globe"
-        url = "#"
-        text = "www.yourwebsite.com"
+        url = "https://ross-williams.net/"
+        text = "ross-williams.net"
 
 
 
@@ -63,26 +63,24 @@ googleAnalytics = "UA-XXXXXXX-Y"
         [[params.skills.list]]
         title = "Technical"
         [[params.skills.list.items]]
-        details = "JavaScript/Angular/React/Vue"
+        details = "C"
         [[params.skills.list.items]]
-        details = "Python/Ruby/PHP"
+        details = "Rust"
         [[params.skills.list.items]]
-        details = "Node.js/ASP.NET"
+        details = "Python"
         [[params.skills.list.items]]
         details = "PostgreSQL/MySQL"
         [[params.skills.list.items]]
-        details = "Object-oriented design"
+        details = "Docker/BSD Jails"
         [[params.skills.list.items]]
-        details = "Design and implement database structures"
-        [[params.skills.list.items]]
-        details = "Lead and deliver complex software systems"
+        details = "Packet Analysis"
 
         [[params.skills.list]]
-        title = "Professional"
+        title = "Core"
         [[params.skills.list.items]]
-        details = "Effective communication"
+        details = "Code-shifting communication"
         [[params.skills.list.items]]
-        details = "Team player"
+        details = "Balance competing pressures"
         [[params.skills.list.items]]
         details = "Strong problem solver"
         [[params.skills.list.items]]
@@ -99,13 +97,9 @@ googleAnalytics = "UA-XXXXXXX-Y"
         enable = true
 
         [[params.education.list]]
-        degree = "MSc in Computer Science"
-        university = "University College London"
-        dates = "2010 - 2011"
-        [[params.education.list]]
-        degree = "BSc Maths and Physics"
-        university = "Imperial College London"
-        dates = "2007 - 2010"
+        degree = "BA Environmental Studies"
+        university = "Warren Wilson College"
+        dates = "2003 – 2006"
 
 
 
@@ -115,7 +109,7 @@ googleAnalytics = "UA-XXXXXXX-Y"
 
 
     [params.awards]
-        enable = true
+        enable = false
 
         [[params.awards.list]]
         name = "Award Lorem Ipsum"
@@ -292,16 +286,16 @@ googleAnalytics = "UA-XXXXXXX-Y"
 
         [[params.social.list]]
         icon = "fab fa-github-square"
-        url = "//github.com/username"
-        title = "username"
+        url = "//github.com/overhacked"
+        title = "overhacked"
         [[params.social.list]]
         icon = "fab fa-linkedin"
-        url = "//linkedin.com/in/username"
-        title = "username"
+        url = "//linkedin.com/in/rosshwilliams"
+        title = "rosshwilliams"
         [[params.social.list]]
-        icon = "fab fa-twitter-square"
-        url = "//twitter.com/username"
-        title = "@username"
+        icon = "fab fa-mastodon"
+        url = "//recurese.social/@overhacked"
+        title = "overhacked@recurse.social"
 
 
 

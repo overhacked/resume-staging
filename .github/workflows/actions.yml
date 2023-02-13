@@ -30,8 +30,7 @@ jobs:
 
       - name: build PDF
         run: |
-          npm install --global chrome-headless-render-pdf
-          /usr/local/bin/chrome-headless-render-pdf \
+          npx chrome-headless-render-pdf \
               --chrome-option=--no-sandbox \
               --include-background \
               --url="file://$GITHUB_WORKSPACE/public/index.html" \

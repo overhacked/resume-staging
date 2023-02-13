@@ -9,6 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      HUGO_PUBLIC_OUTDIR: public_html
+      HUGO_PDF_OUTDIR: pdf_html
+      HUGO_PDF_BASEURL: file://${{ github.workspace }}/pdf_html
     steps:
       - name: checkout repo content
         uses: actions/checkout@v3
@@ -16,30 +20,47 @@ jobs:
           submodules: recursive
           lfs: true
 
-      - name: setup GitHub Pages
+      - name: set up GitHub Pages
         id: pages
         uses: actions/configure-pages@v3
 
-      - name: build Hugo site
+      - name: build Hugo site for GitHub Pages
         uses: jakejarvis/hugo-build-action@v0.110.0
         with:
-          args: --verbose --environment production --baseURL "${{ steps.pages.outputs.base_url }}/" --minify --enableGitInfo 
+          args: >-
+            --verbose
+            --environment production
+            --destination "${{ env.HUGO_PUBLIC_OUTDIR }}"
+            --baseURL "${{ steps.pages.outputs.base_url }}/"
+            --minify
+            --enableGitInfo 
 
-      - name: restore Hugo public directory ownership
-        run: sudo chown -R "$(id -u):$(id -g)" public/
+      - name: build Hugo site for PDF generation
+        uses: jakejarvis/hugo-build-action@v0.110.0
+        with:
+          args: >-
+            --verbose
+            --environment production
+            --destination "${{ env.HUGO_PDF_OUTDIR }}"
+            --baseURL "${{ env.HUGO_PDF_BASEURL }}/"
+            --minify
+            --enableGitInfo 
+
+      - name: restore Hugo output directory ownership
+        run: sudo chown -R "$(id -u):$(id -g)" "${{ env.HUGO_PUBLIC_OUTDIR }}" "${{ env.HUGO_PDF_OUTDIR }}"
 
       - name: build PDF
         run: |
           npx chrome-headless-render-pdf \
               --chrome-option=--no-sandbox \
               --include-background \
-              --url="file://$GITHUB_WORKSPACE/public/index.html" \
-              --pdf="$GITHUB_WORKSPACE/public/resume.pdf"
+              --url="${{ env.HUGO_PDF_BASEURL }}/index.html" \
+              --pdf="$GITHUB_WORKSPACE/${{ env.HUGO_PUBLIC_OUTDIR }}/resume.pdf"
 
       - name: upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: public/
+          path: ${{ env.HUGO_PUBLIC_OUTDIR }}/
 
   deploy:
     needs: build

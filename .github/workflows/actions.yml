@@ -12,6 +12,7 @@ jobs:
     env:
       HUGO_PUBLIC_OUTDIR: public_html
       HUGO_PDF_OUTDIR: pdf_html
+      HUGO_PDF_BASEURL: http://localhost:9876
     steps:
       - name: checkout repo content
         uses: actions/checkout@v3
@@ -41,7 +42,7 @@ jobs:
             --verbose
             --environment production
             --destination "${{ env.HUGO_PDF_OUTDIR }}"
-            --baseURL "./"
+            --baseURL "${{ env.HUGO_PDF_BASEURL }}/"
             --minify
             --enableGitInfo 
 
@@ -59,11 +60,17 @@ jobs:
 
       - name: generate PDF
         run: |
+          python3 -m http.server \
+              --directory "$GITHUB_WORKSPACE/${{ env.HUGO_PDF_OUTDIR }}/" \
+              --bind 127.0.0.1 9876 \
+              > /dev/null &
+          http_server_pid="$!"
           npx chrome-headless-render-pdf \
               --chrome-option=--no-sandbox \
               --include-background \
-              --url="file://$GITHUB_WORKSPACE/${{ env.HUGO_PDF_OUTDIR }}/index.html" \
+              --url="${{ env.HUGO_PDF_BASEURL }}/index.html" \
               --pdf="$GITHUB_WORKSPACE/${{ env.HUGO_PUBLIC_OUTDIR }}/resume.pdf"
+          kill "$http_server_pid"
 
       - name: upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v1

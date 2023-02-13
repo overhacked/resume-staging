@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: checkout repo content
         uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          lfs: true
 
       - name: build Hugo site
         uses: jakejarvis/hugo-build-action@v0.110.0

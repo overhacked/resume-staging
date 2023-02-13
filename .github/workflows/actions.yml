@@ -25,6 +25,9 @@ jobs:
         with:
           args: --verbose --environment production --baseURL "${{ steps.pages.outputs.base_url }}/" --minify --enableGitInfo 
 
+      - name: restore Hugo public directory ownership
+        run: sudo chown -R "$(id -u):$(id -g)" public/
+
       - name: build PDF
         run: |
           npm install --global chrome-headless-render-pdf

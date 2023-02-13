@@ -26,10 +26,13 @@ jobs:
           args: --verbose --environment production --baseURL "${{ steps.pages.outputs.base_url }}/" --minify --enableGitInfo 
 
       - name: build PDF
-        uses: ./.github/actions/html2pdf
-        with:
-          htmlPath: public/index.html
-          pdfName: public/resume.pdf
+        run: |
+          npm -i -g chrome-headless-render-pdf
+          /usr/local/bin/chrome-headless-render-pdf \
+              --chrome-option=--no-sandbox \
+              --include-background \
+              --url="file://$GITHUB_WORKSPACE/public/index.html" \
+              --pdf="$GITHUB_WORKSPACE/public/resume.pdf"
 
       - name: upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v1

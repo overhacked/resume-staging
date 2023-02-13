@@ -16,10 +16,18 @@ jobs:
           submodules: recursive
           lfs: true
 
+      - name: setup GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v3
+
       - name: build Hugo site
         uses: jakejarvis/hugo-build-action@v0.110.0
         with:
-          args: --minify --enableGitInfo --verbose
+          env:
+            # For maximum compatibility with Hugo modules
+            HUGO_ENVIRONMENT: production
+            HUGO_ENV: production
+          args: --verbose --baseURL "${{ steps.pages.outputs.base_url }}/" --minify --enableGitInfo 
 
       - name: build PDF
         uses: ./.github/actions/html2pdf

@@ -27,7 +27,7 @@ jobs:
 
       - name: build PDF
         run: |
-          npm -i -g chrome-headless-render-pdf
+          npm install --global chrome-headless-render-pdf
           /usr/local/bin/chrome-headless-render-pdf \
               --chrome-option=--no-sandbox \
               --include-background \
